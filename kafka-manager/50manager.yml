@@ -1,0 +1,57 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: kafka-manager
+  namespace: kafka
+spec:
+  serviceName: "kafka-manager"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-manager
+        storage: persistent
+      annotations:
+    spec:
+      terminationGracePeriodSeconds: 10
+      initContainers:
+      - name: init-config
+        image: rafabsb/kafka-manager-k8s:latest
+        command: ['/bin/bash', '/etc/kafka/init.sh']
+        volumeMounts:
+        - name: config
+          mountPath: /etc/kafka
+        - name: data
+          mountPath: /var/lib/kafka-manager/data
+      containers:
+      - name: kafka-manager
+        image: rafabsb/kafka-manager-k8s:latest
+        env:
+        - name: ZK_HOSTS
+          value: zookeeper:2181
+        command:
+        - ./bin/kafka-manager
+        ports:
+        - containerPort: 9000
+          name: client
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+        volumeMounts:
+        - name: config
+          mountPath: /etc/kafka
+        - name: data
+          mountPath: /var/lib/kafka-manager/data
+      volumes:
+      - name: config
+        configMap:
+          name: kafka-manager-config
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

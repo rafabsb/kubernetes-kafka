@@ -39,7 +39,7 @@ spec:
         - --override
         -   zookeeper.connect=zookeeper:2181
         - --override
-        -   log.retention.hours=-1
+        -   log.retention.minutes=1
         - --override
         -   log.dirs=/var/lib/kafka/data/topics
         - --override
@@ -70,4 +70,4 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 200Gi
+          storage: 50Gi
