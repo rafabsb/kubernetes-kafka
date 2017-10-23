@@ -8,6 +8,9 @@ metadata:
 spec:
   ports:
   - port: 9092
+    name: client
+  - port: 9997
+    name: jmx
   # [podname].broker.kafka.svc.cluster.local
   clusterIP: None
   selector:

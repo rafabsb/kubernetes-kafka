@@ -31,8 +31,15 @@ spec:
         env:
         - name: KAFKA_LOG4J_OPTS
           value: -Dlog4j.configuration=file:/etc/kafka/log4j.properties
+        - name: KAFKA_JMX_OPTS
+          value: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=${HOSTNAME}"
+        - name: JMX_PORT
+          value: "9997"
         ports:
         - containerPort: 9092
+          name: client
+        - containerPort: 9997
+          name: jmx
         command:
         - ./bin/kafka-server-start.sh
         - /etc/kafka/server.properties
