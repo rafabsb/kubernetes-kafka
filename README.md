@@ -67,20 +67,20 @@ kubectl apply -f ./kafka-manager/
 Kafka Manager default listen port: 9000 TCP.
 To access via web-browser:
 
-1 - Take note of your cluster IP _(192.168.99.100 in the example bellow)_:
+1 - Take note of your cluster IP _(19.11.47.10 in the example bellow)_:
 ```
 kubectl cluster-info
 Kubernetes master is running at https://19.11.47.10:313
-
 ```
+
 2 - Take note of kafka-manager service proxy port _(32010 in the example bellow)_
 kubectl get services --namespace=kafka kafka-manager
-
+```
 NAME            TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
 kafka-manager   NodePort   10.0.0.236   <none>        9000:33333/TCP   1d
 ```
-3 - Head to your web-browser and insert:
 
+3 - Head to your web-browser and insert:
 ```
 https://19.11.47.10:33333
 ```
