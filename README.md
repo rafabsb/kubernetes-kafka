@@ -6,6 +6,7 @@ Transparent Kafka setup that you can grow with.
 Good for both experiments and production.
 
 How to use:
+ * Simply install Kafka-Manager _(yahoo/Kafka-Manager)_ after starting Zookeeper and Kafka Brokers, as described bellow.
  * Good to know: you'll likely want to fork this repo. It prioritizes clarity over configurability, using plain manifests and .propeties files; no client side logic.
  * Run a Kubernetes cluster, [minikube](https://github.com/kubernetes/minikube) or real.
  * Quickstart: use the `kubectl apply`s below.
@@ -56,6 +57,35 @@ That's it. Just add business value :wink:.
 For clients we tend to use [librdkafka](https://github.com/edenhill/librdkafka)-based drivers like [node-rdkafka](https://github.com/Blizzard/node-rdkafka).
 To use [Kafka Connect](http://kafka.apache.org/documentation/#connect) and [Kafka Streams](http://kafka.apache.org/documentation/streams/) you may want to take a look at our [sample](https://github.com/solsson/dockerfiles/tree/master/connect-files) [Dockerfile](https://github.com/solsson/dockerfiles/tree/master/streams-logfilter)s.
 And don't forget the [addon](https://github.com/Yolean/kubernetes-kafka/labels/addon)s.
+
+## Start Kafka-Manager
+
+```
+kubectl apply -f ./kafka-manager/
+```
+
+Kafka Manager default listen port: 9000 TCP.
+To access via web-browser:
+
+1 - Take note of your cluster IP _(192.168.99.100 in the example bellow)_:
+```
+kubectl cluster-info
+Kubernetes master is running at https://19.11.47.10:313
+
+```
+2 - Take note of kafka-manager service proxy port _(32010 in the example bellow)_
+kubectl get services --namespace=kafka kafka-manager
+
+NAME            TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+kafka-manager   NodePort   10.0.0.236   <none>        9000:33333/TCP   1d
+```
+3 - Head to your web-browser and insert:
+
+```
+https://19.11.47.10:33333
+```
+
+4 - _Voilà_, your kafka Manager is up and Running! You can know insert your kafka cluster settings!
 
 ## RBAC
 
