@@ -73,7 +73,7 @@ kubectl cluster-info
 Kubernetes master is running at https://19.11.47.10:313
 ```
 
-2 - Take note of kafka-manager service proxy port _(32010 in the example bellow)_
+2 - Take note of kafka-manager service proxy port _(33333 in the example bellow)_
 kubectl get services --namespace=kafka kafka-manager
 ```
 NAME            TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
